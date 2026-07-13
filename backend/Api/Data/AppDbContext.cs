@@ -6,8 +6,9 @@ namespace Api.Data;
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     public DbSet<Tutor> Tutores => Set<Tutor>();
+    public DbSet<Pet> Pets => Set<Pet>();
 
-    // Demais DbSets (Pet, RegistroPeso, Vacina, etc.) serão adicionados
+    // Demais DbSets (RegistroPeso, Vacina, etc.) serão adicionados
     // conforme os módulos forem implementados — ver docs/requisitos.md.
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,6 +25,18 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 Email = "tutor@pethealth.local",
                 PasswordHash = "$2a$11$2CbxT6s6PjSGYCKvC9GgfetVfI12qwRRj4oA0dpiDDretaad/6j0S"
             });
+        });
+
+        modelBuilder.Entity<Pet>(entity =>
+        {
+            entity.HasOne(p => p.Tutor)
+                .WithMany()
+                .HasForeignKey(p => p.TutorId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasIndex(p => p.TutorId).IsUnique();
+
+            entity.Property(p => p.PesoReferencia).HasColumnType("numeric(5,2)");
         });
     }
 }

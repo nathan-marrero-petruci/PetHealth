@@ -1,0 +1,13 @@
+services:
+  api:
+    image: ghcr.io/nathan-marrero-petruci/pethealth-api:latest
+    env_file: .env
+    ports:
+      - "8091:8080"
+    restart: unless-stopped
+
+  web:
+    image: ghcr.io/nathan-marrero-petruci/pethealth-web:latest
+    ports:
+      - "8092:80"
+    restart: unless-stopped

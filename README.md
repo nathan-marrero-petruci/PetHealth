@@ -31,6 +31,18 @@ npm install
 npm run dev
 ```
 
+### Credenciais do usuário seed
+
+O sistema tem um único usuário (tutor), provisionado via seed fixo na migration
+(`InitialCreate`) — não há endpoint de registro. Após rodar `dotnet ef database update`,
+use estas credenciais para o primeiro login:
+
+- **Email**: `tutor@pethealth.local`
+- **Senha**: `TrocarDepoisDoPrimeiroLogin!`
+
+Troque a senha assim que possível (ainda não há endpoint de troca de senha — ver módulo
+de Fundação no backlog).
+
 ## Agentes
 
 Os papéis de equipe estão definidos em `.claude/agents/`:

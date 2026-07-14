@@ -18,6 +18,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Refeicao> Refeicoes => Set<Refeicao>();
     public DbSet<ItemForaDieta> ItensForaDieta => Set<ItemForaDieta>();
     public DbSet<ComandoTreino> ComandosTreino => Set<ComandoTreino>();
+    public DbSet<SessaoTreino> SessoesTreino => Set<SessaoTreino>();
+    public DbSet<SessaoTreinoComando> SessaoTreinoComandos => Set<SessaoTreinoComando>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -153,6 +155,30 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 .WithMany()
                 .HasForeignKey(c => c.PetId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<SessaoTreino>(entity =>
+        {
+            entity.HasOne(s => s.Pet)
+                .WithMany()
+                .HasForeignKey(s => s.PetId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<SessaoTreinoComando>(entity =>
+        {
+            entity.HasOne(c => c.SessaoTreino)
+                .WithMany(s => s.SessaoTreinoComandos)
+                .HasForeignKey(c => c.SessaoTreinoId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Restrict (não Cascade): ComandoTreino nunca é removido fisicamente (soft delete
+            // em TRE-01), então este FK nunca dispara, mas Restrict deixa explícito que o
+            // histórico de sessões não deve ser apagado ao mexer em comandos.
+            entity.HasOne(c => c.ComandoTreino)
+                .WithMany()
+                .HasForeignKey(c => c.ComandoTreinoId)
+                .OnDelete(DeleteBehavior.Restrict);
         });
     }
 }

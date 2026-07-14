@@ -4,4 +4,6 @@ public record VacinaResponse(
     Guid Id,
     string Nome,
     DateOnly DataAplicacao,
-    DateOnly? DataProximaDose);
+    DateOnly? DataProximaDose,
+    int AntecedenciaLembreteDias,
+    VacinaStatus Status);

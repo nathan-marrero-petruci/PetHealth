@@ -52,7 +52,8 @@ public class VacinaController(AppDbContext db) : ControllerBase
             PetId = petId.Value,
             Nome = request.Nome,
             DataAplicacao = request.DataAplicacao!.Value,
-            DataProximaDose = request.DataProximaDose
+            DataProximaDose = request.DataProximaDose,
+            AntecedenciaLembreteDias = request.AntecedenciaLembreteDias!.Value
         };
 
         db.Vacinas.Add(vacina);
@@ -86,6 +87,7 @@ public class VacinaController(AppDbContext db) : ControllerBase
         vacina.Nome = request.Nome;
         vacina.DataAplicacao = request.DataAplicacao!.Value;
         vacina.DataProximaDose = request.DataProximaDose;
+        vacina.AntecedenciaLembreteDias = request.AntecedenciaLembreteDias!.Value;
 
         await db.SaveChangesAsync();
 
@@ -127,5 +129,32 @@ public class VacinaController(AppDbContext db) : ControllerBase
     }
 
     private static VacinaResponse ToResponse(VacinaModel vacina) => new(
-        vacina.Id, vacina.Nome, vacina.DataAplicacao, vacina.DataProximaDose);
+        vacina.Id,
+        vacina.Nome,
+        vacina.DataAplicacao,
+        vacina.DataProximaDose,
+        vacina.AntecedenciaLembreteDias,
+        GetStatus(vacina));
+
+    // Vencida: data da próxima dose já passou. Proxima: hoje já está dentro da janela de
+    // antecedência (DataProximaDose - AntecedenciaLembreteDias) mas a data ainda não passou.
+    private static VacinaStatus GetStatus(VacinaModel vacina)
+    {
+        if (vacina.DataProximaDose is null)
+        {
+            return VacinaStatus.SemProximaDose;
+        }
+
+        var hoje = DateOnly.FromDateTime(DateTime.UtcNow);
+        var dataProximaDose = vacina.DataProximaDose.Value;
+
+        if (dataProximaDose < hoje)
+        {
+            return VacinaStatus.Vencida;
+        }
+
+        var inicioJanelaLembrete = dataProximaDose.AddDays(-vacina.AntecedenciaLembreteDias);
+
+        return hoje >= inicioJanelaLembrete ? VacinaStatus.Proxima : VacinaStatus.EmDia;
+    }
 }

@@ -9,4 +9,6 @@ public class VacinaRequest
     [Required]
     public DateOnly? DataAplicacao { get; set; }
     public DateOnly? DataProximaDose { get; set; }
+    [Required]
+    public int? AntecedenciaLembreteDias { get; set; }
 }

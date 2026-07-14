@@ -14,6 +14,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Vermifugacao> Vermifugacoes => Set<Vermifugacao>();
     public DbSet<Antipulga> Antipulgas => Set<Antipulga>();
     public DbSet<Observacao> Observacoes => Set<Observacao>();
+    public DbSet<DietaPadrao> DietasPadrao => Set<DietaPadrao>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -101,6 +102,19 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 .WithMany()
                 .HasForeignKey(o => o.PetId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<DietaPadrao>(entity =>
+        {
+            entity.HasOne(d => d.Pet)
+                .WithMany()
+                .HasForeignKey(d => d.PetId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasIndex(d => d.PetId).IsUnique();
+
+            entity.Property(d => d.QuantidadeDiariaGramas).HasColumnType("numeric(6,2)");
+            entity.Property(d => d.QuantidadePorRefeicaoGramas).HasColumnType("numeric(6,2)");
         });
     }
 }

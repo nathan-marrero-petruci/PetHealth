@@ -8,9 +8,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Tutor> Tutores => Set<Tutor>();
     public DbSet<Pet> Pets => Set<Pet>();
     public DbSet<RegistroPeso> RegistrosPeso => Set<RegistroPeso>();
-
-    // Demais DbSets (Vacina, etc.) serão adicionados
-    // conforme os módulos forem implementados — ver docs/requisitos.md.
+    public DbSet<Vacina> Vacinas => Set<Vacina>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -48,6 +46,14 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 .OnDelete(DeleteBehavior.Cascade);
 
             entity.Property(r => r.Peso).HasColumnType("numeric(5,2)");
+        });
+
+        modelBuilder.Entity<Vacina>(entity =>
+        {
+            entity.HasOne(v => v.Pet)
+                .WithMany()
+                .HasForeignKey(v => v.PetId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

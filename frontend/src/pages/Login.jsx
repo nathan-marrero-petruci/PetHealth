@@ -16,7 +16,7 @@ export function Login() {
     try {
       const response = await api.post("/api/auth/login", { email, password });
       setToken(response.data.token);
-      navigate("/peso");
+      navigate("/dashboard");
     } catch {
       setError("Email ou senha inválidos.");
     }

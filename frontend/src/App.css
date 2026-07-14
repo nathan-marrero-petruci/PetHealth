@@ -26,3 +26,44 @@
 .peso-chart-page {
   padding: 32px;
 }
+
+.dashboard-page {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dashboard-card {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.dashboard-vacinas-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dashboard-banner {
+  padding: 8px 12px;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.dashboard-banner-vencida {
+  background-color: #dc2626;
+}
+
+.dashboard-banner-proxima {
+  background-color: #f59e0b;
+}
+
+@media (max-width: 480px) {
+  .dashboard-page {
+    padding: 16px;
+  }
+}

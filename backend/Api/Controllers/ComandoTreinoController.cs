@@ -107,6 +107,33 @@ public class ComandoTreinoController(AppDbContext db) : ControllerBase
         return NoContent();
     }
 
+    [HttpGet("{id}/evolucao")]
+    public async Task<IActionResult> Evolucao(Guid id)
+    {
+        var petId = await GetPetIdAsync();
+
+        if (petId is null)
+        {
+            return BadRequest(new { message = "Cadastre o pet antes de cadastrar comandos de treino." });
+        }
+
+        var comandoExiste = await db.ComandosTreino.AnyAsync(c => c.Id == id && c.PetId == petId);
+
+        if (!comandoExiste)
+        {
+            return NotFound();
+        }
+
+        var evolucao = await db.SessaoTreinoComandos
+            .Include(c => c.SessaoTreino)
+            .Where(c => c.ComandoTreinoId == id && c.SessaoTreino!.PetId == petId)
+            .OrderBy(c => c.SessaoTreino!.Data)
+            .Select(c => new EvolucaoComandoResponse(c.SessaoTreino!.Data, c.NivelSucesso))
+            .ToListAsync();
+
+        return Ok(evolucao);
+    }
+
     private Guid GetTutorId() =>
         Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 

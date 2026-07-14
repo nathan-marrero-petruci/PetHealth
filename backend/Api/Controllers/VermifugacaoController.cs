@@ -14,8 +14,13 @@ namespace Api.Controllers;
 public class VermifugacaoController(AppDbContext db) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> List()
+    public async Task<IActionResult> List(DateOnly? dataInicio, DateOnly? dataFim)
     {
+        if (dataInicio is not null && dataFim is not null && dataFim < dataInicio)
+        {
+            return BadRequest(new { message = "Data final não pode ser anterior à data inicial." });
+        }
+
         var petId = await GetPetIdAsync();
 
         if (petId is null)
@@ -23,10 +28,19 @@ public class VermifugacaoController(AppDbContext db) : ControllerBase
             return BadRequest(new { message = "Cadastre o pet antes de registrar vermifugações." });
         }
 
-        var vermifugacoes = await db.Vermifugacoes
-            .Where(v => v.PetId == petId)
-            .OrderByDescending(v => v.DataAplicacao)
-            .ToListAsync();
+        var query = db.Vermifugacoes.Where(v => v.PetId == petId);
+
+        if (dataInicio is not null)
+        {
+            query = query.Where(v => v.DataAplicacao >= dataInicio);
+        }
+
+        if (dataFim is not null)
+        {
+            query = query.Where(v => v.DataAplicacao <= dataFim);
+        }
+
+        var vermifugacoes = await query.OrderByDescending(v => v.DataAplicacao).ToListAsync();
 
         return Ok(vermifugacoes.Select(ToResponse));
     }

@@ -17,8 +17,13 @@ public class RefeicaoController(AppDbContext db) : ControllerBase
     private const decimal QuantidadeMaximaGramas = 9999.99m;
 
     [HttpGet]
-    public async Task<IActionResult> List()
+    public async Task<IActionResult> List(DateOnly? dataInicio, DateOnly? dataFim)
     {
+        if (dataInicio is not null && dataFim is not null && dataFim < dataInicio)
+        {
+            return BadRequest(new { message = "Data final não pode ser anterior à data inicial." });
+        }
+
         var petId = await GetPetIdAsync();
 
         if (petId is null)
@@ -26,10 +31,21 @@ public class RefeicaoController(AppDbContext db) : ControllerBase
             return BadRequest(new { message = "Cadastre o pet antes de registrar refeições." });
         }
 
-        var refeicoes = await db.Refeicoes
-            .Where(r => r.PetId == petId)
-            .OrderByDescending(r => r.DataHora)
-            .ToListAsync();
+        var query = db.Refeicoes.Where(r => r.PetId == petId);
+
+        if (dataInicio is not null)
+        {
+            var inicio = dataInicio.Value.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc);
+            query = query.Where(r => r.DataHora >= inicio);
+        }
+
+        if (dataFim is not null)
+        {
+            var fim = dataFim.Value.ToDateTime(TimeOnly.MaxValue, DateTimeKind.Utc);
+            query = query.Where(r => r.DataHora <= fim);
+        }
+
+        var refeicoes = await query.OrderByDescending(r => r.DataHora).ToListAsync();
 
         var dieta = await GetDietaAsync(petId.Value);
 

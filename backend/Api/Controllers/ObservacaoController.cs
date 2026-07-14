@@ -14,8 +14,13 @@ namespace Api.Controllers;
 public class ObservacaoController(AppDbContext db) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> List()
+    public async Task<IActionResult> List(DateOnly? dataInicio, DateOnly? dataFim)
     {
+        if (dataInicio is not null && dataFim is not null && dataFim < dataInicio)
+        {
+            return BadRequest(new { message = "Data final não pode ser anterior à data inicial." });
+        }
+
         var petId = await GetPetIdAsync();
 
         if (petId is null)
@@ -23,10 +28,19 @@ public class ObservacaoController(AppDbContext db) : ControllerBase
             return BadRequest(new { message = "Cadastre o pet antes de registrar observações." });
         }
 
-        var observacoes = await db.Observacoes
-            .Where(o => o.PetId == petId)
-            .OrderByDescending(o => o.Data)
-            .ToListAsync();
+        var query = db.Observacoes.Where(o => o.PetId == petId);
+
+        if (dataInicio is not null)
+        {
+            query = query.Where(o => o.Data >= dataInicio);
+        }
+
+        if (dataFim is not null)
+        {
+            query = query.Where(o => o.Data <= dataFim);
+        }
+
+        var observacoes = await query.OrderByDescending(o => o.Data).ToListAsync();
 
         return Ok(observacoes.Select(ToResponse));
     }

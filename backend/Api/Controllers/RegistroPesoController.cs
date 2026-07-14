@@ -14,8 +14,13 @@ namespace Api.Controllers;
 public class RegistroPesoController(AppDbContext db) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> List()
+    public async Task<IActionResult> List(DateOnly? dataInicio, DateOnly? dataFim)
     {
+        if (dataInicio is not null && dataFim is not null && dataFim < dataInicio)
+        {
+            return BadRequest(new { message = "Data final não pode ser anterior à data inicial." });
+        }
+
         var petId = await GetPetIdAsync();
 
         if (petId is null)
@@ -23,10 +28,19 @@ public class RegistroPesoController(AppDbContext db) : ControllerBase
             return BadRequest(new { message = "Cadastre o pet antes de registrar o peso." });
         }
 
-        var registros = await db.RegistrosPeso
-            .Where(r => r.PetId == petId)
-            .OrderByDescending(r => r.Data)
-            .ToListAsync();
+        var query = db.RegistrosPeso.Where(r => r.PetId == petId);
+
+        if (dataInicio is not null)
+        {
+            query = query.Where(r => r.Data >= dataInicio);
+        }
+
+        if (dataFim is not null)
+        {
+            query = query.Where(r => r.Data <= dataFim);
+        }
+
+        var registros = await query.OrderByDescending(r => r.Data).ToListAsync();
 
         return Ok(registros.Select(ToResponse));
     }

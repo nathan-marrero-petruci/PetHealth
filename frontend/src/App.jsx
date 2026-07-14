@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Login } from './pages/Login'
 import { PesoChart } from './pages/PesoChart'
 import { Dashboard } from './pages/Dashboard'
+import { HistoricoPeriodo } from './pages/HistoricoPeriodo'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import './App.css'
 
@@ -23,6 +24,14 @@ function App() {
           element={
             <ProtectedRoute>
               <PesoChart />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/historico"
+          element={
+            <ProtectedRoute>
+              <HistoricoPeriodo />
             </ProtectedRoute>
           }
         />

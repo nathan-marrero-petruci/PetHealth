@@ -99,6 +99,8 @@ export function Dashboard() {
     <div className="dashboard-page">
       <h1>Dashboard</h1>
 
+      <Link to="/historico">Ver histórico por período</Link>
+
       <section className="dashboard-card">
         <h2>Peso</h2>
         {pesosError ? (

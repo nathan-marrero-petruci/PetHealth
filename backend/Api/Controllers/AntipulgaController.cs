@@ -14,8 +14,13 @@ namespace Api.Controllers;
 public class AntipulgaController(AppDbContext db) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> List()
+    public async Task<IActionResult> List(DateOnly? dataInicio, DateOnly? dataFim)
     {
+        if (dataInicio is not null && dataFim is not null && dataFim < dataInicio)
+        {
+            return BadRequest(new { message = "Data final não pode ser anterior à data inicial." });
+        }
+
         var petId = await GetPetIdAsync();
 
         if (petId is null)
@@ -23,10 +28,19 @@ public class AntipulgaController(AppDbContext db) : ControllerBase
             return BadRequest(new { message = "Cadastre o pet antes de registrar antipulgas." });
         }
 
-        var antipulgas = await db.Antipulgas
-            .Where(a => a.PetId == petId)
-            .OrderByDescending(a => a.DataAplicacao)
-            .ToListAsync();
+        var query = db.Antipulgas.Where(a => a.PetId == petId);
+
+        if (dataInicio is not null)
+        {
+            query = query.Where(a => a.DataAplicacao >= dataInicio);
+        }
+
+        if (dataFim is not null)
+        {
+            query = query.Where(a => a.DataAplicacao <= dataFim);
+        }
+
+        var antipulgas = await query.OrderByDescending(a => a.DataAplicacao).ToListAsync();
 
         return Ok(antipulgas.Select(ToResponse));
     }

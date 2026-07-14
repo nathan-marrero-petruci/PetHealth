@@ -14,8 +14,13 @@ namespace Api.Controllers;
 public class ItemForaDietaController(AppDbContext db) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> List()
+    public async Task<IActionResult> List(DateOnly? dataInicio, DateOnly? dataFim)
     {
+        if (dataInicio is not null && dataFim is not null && dataFim < dataInicio)
+        {
+            return BadRequest(new { message = "Data final não pode ser anterior à data inicial." });
+        }
+
         var petId = await GetPetIdAsync();
 
         if (petId is null)
@@ -23,10 +28,21 @@ public class ItemForaDietaController(AppDbContext db) : ControllerBase
             return BadRequest(new { message = "Cadastre o pet antes de registrar itens fora da dieta." });
         }
 
-        var itens = await db.ItensForaDieta
-            .Where(i => i.PetId == petId)
-            .OrderByDescending(i => i.DataHora)
-            .ToListAsync();
+        var query = db.ItensForaDieta.Where(i => i.PetId == petId);
+
+        if (dataInicio is not null)
+        {
+            var inicio = dataInicio.Value.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc);
+            query = query.Where(i => i.DataHora >= inicio);
+        }
+
+        if (dataFim is not null)
+        {
+            var fim = dataFim.Value.ToDateTime(TimeOnly.MaxValue, DateTimeKind.Utc);
+            query = query.Where(i => i.DataHora <= fim);
+        }
+
+        var itens = await query.OrderByDescending(i => i.DataHora).ToListAsync();
 
         return Ok(itens.Select(ToResponse));
     }

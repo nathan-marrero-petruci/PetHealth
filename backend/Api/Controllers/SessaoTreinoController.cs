@@ -15,8 +15,13 @@ namespace Api.Controllers;
 public class SessaoTreinoController(AppDbContext db) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> List()
+    public async Task<IActionResult> List(DateOnly? dataInicio, DateOnly? dataFim)
     {
+        if (dataInicio is not null && dataFim is not null && dataFim < dataInicio)
+        {
+            return BadRequest(new { message = "Data final não pode ser anterior à data inicial." });
+        }
+
         var petId = await GetPetIdAsync();
 
         if (petId is null)
@@ -24,12 +29,22 @@ public class SessaoTreinoController(AppDbContext db) : ControllerBase
             return BadRequest(new { message = "Cadastre o pet antes de registrar sessões de treino." });
         }
 
-        var sessoes = await db.SessoesTreino
+        var query = db.SessoesTreino
             .Include(s => s.SessaoTreinoComandos)
             .ThenInclude(c => c.ComandoTreino)
-            .Where(s => s.PetId == petId)
-            .OrderByDescending(s => s.Data)
-            .ToListAsync();
+            .Where(s => s.PetId == petId);
+
+        if (dataInicio is not null)
+        {
+            query = query.Where(s => s.Data >= dataInicio);
+        }
+
+        if (dataFim is not null)
+        {
+            query = query.Where(s => s.Data <= dataFim);
+        }
+
+        var sessoes = await query.OrderByDescending(s => s.Data).ToListAsync();
 
         return Ok(sessoes.Select(ToResponse));
     }

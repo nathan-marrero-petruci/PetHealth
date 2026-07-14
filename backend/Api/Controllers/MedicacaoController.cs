@@ -14,8 +14,13 @@ namespace Api.Controllers;
 public class MedicacaoController(AppDbContext db) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> List()
+    public async Task<IActionResult> List(DateOnly? dataInicio, DateOnly? dataFim)
     {
+        if (dataInicio is not null && dataFim is not null && dataFim < dataInicio)
+        {
+            return BadRequest(new { message = "Data final não pode ser anterior à data inicial." });
+        }
+
         var petId = await GetPetIdAsync();
 
         if (petId is null)
@@ -23,10 +28,19 @@ public class MedicacaoController(AppDbContext db) : ControllerBase
             return BadRequest(new { message = "Cadastre o pet antes de registrar medicações." });
         }
 
-        var medicacoes = await db.Medicacoes
-            .Where(m => m.PetId == petId)
-            .OrderByDescending(m => m.DataInicio)
-            .ToListAsync();
+        var query = db.Medicacoes.Where(m => m.PetId == petId);
+
+        if (dataInicio is not null)
+        {
+            query = query.Where(m => m.DataInicio >= dataInicio);
+        }
+
+        if (dataFim is not null)
+        {
+            query = query.Where(m => m.DataInicio <= dataFim);
+        }
+
+        var medicacoes = await query.OrderByDescending(m => m.DataInicio).ToListAsync();
 
         return Ok(medicacoes.Select(ToResponse));
     }

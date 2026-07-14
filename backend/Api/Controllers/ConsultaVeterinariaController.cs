@@ -14,8 +14,13 @@ namespace Api.Controllers;
 public class ConsultaVeterinariaController(AppDbContext db) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> List()
+    public async Task<IActionResult> List(DateOnly? dataInicio, DateOnly? dataFim)
     {
+        if (dataInicio is not null && dataFim is not null && dataFim < dataInicio)
+        {
+            return BadRequest(new { message = "Data final não pode ser anterior à data inicial." });
+        }
+
         var petId = await GetPetIdAsync();
 
         if (petId is null)
@@ -23,10 +28,19 @@ public class ConsultaVeterinariaController(AppDbContext db) : ControllerBase
             return BadRequest(new { message = "Cadastre o pet antes de registrar consultas." });
         }
 
-        var consultas = await db.ConsultasVeterinarias
-            .Where(c => c.PetId == petId)
-            .OrderByDescending(c => c.Data)
-            .ToListAsync();
+        var query = db.ConsultasVeterinarias.Where(c => c.PetId == petId);
+
+        if (dataInicio is not null)
+        {
+            query = query.Where(c => c.Data >= dataInicio);
+        }
+
+        if (dataFim is not null)
+        {
+            query = query.Where(c => c.Data <= dataFim);
+        }
+
+        var consultas = await query.OrderByDescending(c => c.Data).ToListAsync();
 
         return Ok(consultas.Select(ToResponse));
     }

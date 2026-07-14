@@ -17,6 +17,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<DietaPadrao> DietasPadrao => Set<DietaPadrao>();
     public DbSet<Refeicao> Refeicoes => Set<Refeicao>();
     public DbSet<ItemForaDieta> ItensForaDieta => Set<ItemForaDieta>();
+    public DbSet<ComandoTreino> ComandosTreino => Set<ComandoTreino>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -144,6 +145,14 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             // o app sempre normaliza DataHora para Kind=Utc antes de persistir (ver
             // ItemForaDietaController.NormalizeToUtc).
             entity.Property(i => i.DataHora).HasColumnType("timestamp with time zone");
+        });
+
+        modelBuilder.Entity<ComandoTreino>(entity =>
+        {
+            entity.HasOne(c => c.Pet)
+                .WithMany()
+                .HasForeignKey(c => c.PetId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

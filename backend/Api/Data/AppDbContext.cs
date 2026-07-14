@@ -16,6 +16,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Observacao> Observacoes => Set<Observacao>();
     public DbSet<DietaPadrao> DietasPadrao => Set<DietaPadrao>();
     public DbSet<Refeicao> Refeicoes => Set<Refeicao>();
+    public DbSet<ItemForaDieta> ItensForaDieta => Set<ItemForaDieta>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -130,6 +131,19 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             // o app sempre normaliza DataHora para Kind=Utc antes de persistir (ver
             // RefeicaoController.NormalizeToUtc).
             entity.Property(r => r.DataHora).HasColumnType("timestamp with time zone");
+        });
+
+        modelBuilder.Entity<ItemForaDieta>(entity =>
+        {
+            entity.HasOne(i => i.Pet)
+                .WithMany()
+                .HasForeignKey(i => i.PetId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // timestamptz é o tipo idiomático do Postgres para guardar instantes em UTC;
+            // o app sempre normaliza DataHora para Kind=Utc antes de persistir (ver
+            // ItemForaDietaController.NormalizeToUtc).
+            entity.Property(i => i.DataHora).HasColumnType("timestamp with time zone");
         });
     }
 }

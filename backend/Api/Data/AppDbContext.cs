@@ -11,6 +11,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Vacina> Vacinas => Set<Vacina>();
     public DbSet<ConsultaVeterinaria> ConsultasVeterinarias => Set<ConsultaVeterinaria>();
     public DbSet<Medicacao> Medicacoes => Set<Medicacao>();
+    public DbSet<Vermifugacao> Vermifugacoes => Set<Vermifugacao>();
+    public DbSet<Antipulga> Antipulgas => Set<Antipulga>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -74,6 +76,22 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 .OnDelete(DeleteBehavior.Cascade);
 
             entity.Property(m => m.DosagemValor).HasColumnType("numeric(5,2)");
+        });
+
+        modelBuilder.Entity<Vermifugacao>(entity =>
+        {
+            entity.HasOne(v => v.Pet)
+                .WithMany()
+                .HasForeignKey(v => v.PetId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Antipulga>(entity =>
+        {
+            entity.HasOne(a => a.Pet)
+                .WithMany()
+                .HasForeignKey(a => a.PetId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

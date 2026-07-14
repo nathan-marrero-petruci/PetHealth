@@ -3,6 +3,7 @@ using System;
 using Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Api.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260714161118_AddVermifugacao")]
+    partial class AddVermifugacao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,32 +24,6 @@ namespace Api.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("Api.Models.Antipulga", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateOnly>("DataAplicacao")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly?>("DataProximaAplicacao")
-                        .HasColumnType("date");
-
-                    b.Property<Guid>("PetId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Produto")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PetId");
-
-                    b.ToTable("Antipulgas");
-                });
 
             modelBuilder.Entity("Api.Models.ConsultaVeterinaria", b =>
                 {
@@ -260,17 +237,6 @@ namespace Api.Data.Migrations
                     b.HasIndex("PetId");
 
                     b.ToTable("Vermifugacoes");
-                });
-
-            modelBuilder.Entity("Api.Models.Antipulga", b =>
-                {
-                    b.HasOne("Api.Models.Pet", "Pet")
-                        .WithMany()
-                        .HasForeignKey("PetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pet");
                 });
 
             modelBuilder.Entity("Api.Models.ConsultaVeterinaria", b =>

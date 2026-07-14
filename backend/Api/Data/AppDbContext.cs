@@ -13,6 +13,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Medicacao> Medicacoes => Set<Medicacao>();
     public DbSet<Vermifugacao> Vermifugacoes => Set<Vermifugacao>();
     public DbSet<Antipulga> Antipulgas => Set<Antipulga>();
+    public DbSet<Observacao> Observacoes => Set<Observacao>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -91,6 +92,14 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             entity.HasOne(a => a.Pet)
                 .WithMany()
                 .HasForeignKey(a => a.PetId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Observacao>(entity =>
+        {
+            entity.HasOne(o => o.Pet)
+                .WithMany()
+                .HasForeignKey(o => o.PetId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
     }

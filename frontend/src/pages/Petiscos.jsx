@@ -4,11 +4,12 @@ import { formatarDataHoraLocal, localInputParaUtcIso, utcIsoParaLocalInput } fro
 
 const FORM_INICIAL = {
   dataHora: "",
-  quantidadeGramas: "",
+  descricao: "",
+  quantidadeObservacao: "",
 };
 
-export function Refeicoes() {
-  const [refeicoes, setRefeicoes] = useState(null);
+export function Petiscos() {
+  const [itens, setItens] = useState(null);
   const [error, setError] = useState("");
   const [form, setForm] = useState(FORM_INICIAL);
   const [editingId, setEditingId] = useState(null);
@@ -16,10 +17,10 @@ export function Refeicoes() {
 
   async function load() {
     try {
-      const response = await api.get("/api/refeicoes");
-      setRefeicoes(response.data);
+      const response = await api.get("/api/itens-fora-dieta");
+      setItens(response.data);
     } catch {
-      setError("Não foi possível carregar as refeições.");
+      setError("Não foi possível carregar os petiscos.");
     }
   }
 
@@ -43,38 +44,40 @@ export function Refeicoes() {
 
     const payload = {
       dataHora: localInputParaUtcIso(form.dataHora),
-      quantidadeGramas: Number(form.quantidadeGramas),
+      descricao: form.descricao,
+      quantidadeObservacao: form.quantidadeObservacao || null,
     };
 
     try {
       if (editingId) {
-        await api.put(`/api/refeicoes/${editingId}`, payload);
+        await api.put(`/api/itens-fora-dieta/${editingId}`, payload);
       } else {
-        await api.post("/api/refeicoes", payload);
+        await api.post("/api/itens-fora-dieta", payload);
       }
 
       limparFormulario();
       await load();
     } catch (submitError) {
-      setFormError(submitError.response?.data?.message ?? "Não foi possível salvar a refeição.");
+      setFormError(submitError.response?.data?.message ?? "Não foi possível salvar o petisco.");
     }
   }
 
-  function handleEditar(refeicao) {
-    setEditingId(refeicao.id);
+  function handleEditar(item) {
+    setEditingId(item.id);
     setForm({
-      dataHora: utcIsoParaLocalInput(refeicao.dataHora),
-      quantidadeGramas: refeicao.quantidadeGramas,
+      dataHora: utcIsoParaLocalInput(item.dataHora),
+      descricao: item.descricao,
+      quantidadeObservacao: item.quantidadeObservacao ?? "",
     });
     setFormError("");
   }
 
   async function handleRemover(id) {
-    if (!window.confirm("Remover esta refeição?")) {
+    if (!window.confirm("Remover este petisco?")) {
       return;
     }
 
-    await api.delete(`/api/refeicoes/${id}`);
+    await api.delete(`/api/itens-fora-dieta/${id}`);
     await load();
   }
 
@@ -82,16 +85,16 @@ export function Refeicoes() {
     return <p>{error}</p>;
   }
 
-  if (refeicoes === null) {
+  if (itens === null) {
     return <p>Carregando...</p>;
   }
 
   return (
     <div className="dashboard-page">
-      <h1>Refeições diárias</h1>
+      <h1>Petiscos / itens fora da dieta</h1>
 
       <section className="dashboard-card">
-        <h2>{editingId ? "Editar refeição" : "Registrar refeição"}</h2>
+        <h2>{editingId ? "Editar petisco" : "Registrar petisco"}</h2>
         <form onSubmit={handleSubmit} className="login-form">
           <label>
             Data/hora
@@ -103,15 +106,20 @@ export function Refeicoes() {
             />
           </label>
           <label>
-            Quantidade servida (g)
+            Descrição
             <input
-              type="number"
-              step="0.01"
-              min="0.01"
-              max="9999.99"
-              value={form.quantidadeGramas}
-              onChange={(event) => handleChange("quantidadeGramas", event.target.value)}
+              type="text"
+              value={form.descricao}
+              onChange={(event) => handleChange("descricao", event.target.value)}
               required
+            />
+          </label>
+          <label>
+            Quantidade/observação
+            <input
+              type="text"
+              value={form.quantidadeObservacao}
+              onChange={(event) => handleChange("quantidadeObservacao", event.target.value)}
             />
           </label>
           {formError && <p className="login-error">{formError}</p>}
@@ -125,25 +133,22 @@ export function Refeicoes() {
       </section>
 
       <section className="dashboard-card">
-        <h2>Refeições registradas</h2>
-        {refeicoes.length === 0 ? (
-          <p>Nenhuma refeição registrada ainda.</p>
+        <h2>Petiscos registrados</h2>
+        {itens.length === 0 ? (
+          <p>Nenhum petisco registrado ainda.</p>
         ) : (
           <ul className="vacinas-list">
-            {refeicoes.map((refeicao) => (
-              <li key={refeicao.id} className="vacinas-item">
+            {itens.map((item) => (
+              <li key={item.id} className="vacinas-item">
                 <div>
-                  <strong>{formatarDataHoraLocal(refeicao.dataHora)}</strong> —{" "}
-                  {refeicao.quantidadeGramas} g
-                  {refeicao.diferencaGramas === null
-                    ? " — sem dieta padrão cadastrada para comparar"
-                    : ` — diferença de ${refeicao.diferencaGramas} g em relação à dieta padrão`}
+                  <strong>{formatarDataHoraLocal(item.dataHora)}</strong> — {item.descricao}
+                  {item.quantidadeObservacao && ` — ${item.quantidadeObservacao}`}
                 </div>
                 <div className="vacinas-item-acoes">
-                  <button type="button" onClick={() => handleEditar(refeicao)}>
+                  <button type="button" onClick={() => handleEditar(item)}>
                     Editar
                   </button>
-                  <button type="button" onClick={() => handleRemover(refeicao.id)}>
+                  <button type="button" onClick={() => handleRemover(item.id)}>
                     Remover
                   </button>
                 </div>

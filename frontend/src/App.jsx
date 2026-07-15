@@ -4,6 +4,7 @@ import { PesoChart } from './pages/PesoChart'
 import { Vacinas } from './pages/Vacinas'
 import { Consultas } from './pages/Consultas'
 import { Medicacoes } from './pages/Medicacoes'
+import { SaudePreventiva } from './pages/SaudePreventiva'
 import { Dashboard } from './pages/Dashboard'
 import { HistoricoPeriodo } from './pages/HistoricoPeriodo'
 import { ProtectedRoute } from './components/ProtectedRoute'
@@ -27,6 +28,7 @@ function App() {
           <Route path="/vacinas" element={<Vacinas />} />
           <Route path="/consultas" element={<Consultas />} />
           <Route path="/medicacoes" element={<Medicacoes />} />
+          <Route path="/saude-preventiva" element={<SaudePreventiva />} />
           <Route path="/historico" element={<HistoricoPeriodo />} />
         </Route>
         <Route path="*" element={<Navigate to="/dashboard" replace />} />

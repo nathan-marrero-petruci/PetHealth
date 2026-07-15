@@ -108,6 +108,19 @@
   }
 }
 
+.saude-preventiva-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .saude-preventiva-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .app-layout {
   display: flex;
   flex-direction: column;

@@ -9,6 +9,7 @@ export const NAVEGACAO = [
   { modulo: "Saúde", label: "Vacinas", rota: "/vacinas" },
   { modulo: "Saúde", label: "Consultas", rota: "/consultas" },
   { modulo: "Saúde", label: "Medicações", rota: "/medicacoes" },
+  { modulo: "Saúde", label: "Saúde preventiva", rota: "/saude-preventiva" },
   { modulo: "Relatórios", label: "Dashboard", rota: "/dashboard" },
   { modulo: "Relatórios", label: "Histórico por período", rota: "/historico" },
 ];

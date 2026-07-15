@@ -23,6 +23,10 @@
   color: #dc2626;
 }
 
+.form-success {
+  color: #16a34a;
+}
+
 .peso-chart-page {
   padding: 32px;
 }

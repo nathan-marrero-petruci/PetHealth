@@ -3,6 +3,7 @@ import { Login } from './pages/Login'
 import { PesoChart } from './pages/PesoChart'
 import { Vacinas } from './pages/Vacinas'
 import { Consultas } from './pages/Consultas'
+import { Medicacoes } from './pages/Medicacoes'
 import { Dashboard } from './pages/Dashboard'
 import { HistoricoPeriodo } from './pages/HistoricoPeriodo'
 import { ProtectedRoute } from './components/ProtectedRoute'
@@ -25,6 +26,7 @@ function App() {
           <Route path="/peso" element={<PesoChart />} />
           <Route path="/vacinas" element={<Vacinas />} />
           <Route path="/consultas" element={<Consultas />} />
+          <Route path="/medicacoes" element={<Medicacoes />} />
           <Route path="/historico" element={<HistoricoPeriodo />} />
         </Route>
         <Route path="*" element={<Navigate to="/dashboard" replace />} />

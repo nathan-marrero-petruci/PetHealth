@@ -4,6 +4,7 @@ import { PesoChart } from './pages/PesoChart'
 import { Dashboard } from './pages/Dashboard'
 import { HistoricoPeriodo } from './pages/HistoricoPeriodo'
 import { ProtectedRoute } from './components/ProtectedRoute'
+import { AppLayout } from './components/AppLayout'
 import './App.css'
 
 function App() {
@@ -12,29 +13,16 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route
-          path="/dashboard"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <AppLayout />
             </ProtectedRoute>
           }
-        />
-        <Route
-          path="/peso"
-          element={
-            <ProtectedRoute>
-              <PesoChart />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/historico"
-          element={
-            <ProtectedRoute>
-              <HistoricoPeriodo />
-            </ProtectedRoute>
-          }
-        />
+        >
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/peso" element={<PesoChart />} />
+          <Route path="/historico" element={<HistoricoPeriodo />} />
+        </Route>
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </BrowserRouter>

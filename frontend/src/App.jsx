@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Login } from './pages/Login'
 import { PesoChart } from './pages/PesoChart'
 import { Vacinas } from './pages/Vacinas'
+import { Consultas } from './pages/Consultas'
 import { Dashboard } from './pages/Dashboard'
 import { HistoricoPeriodo } from './pages/HistoricoPeriodo'
 import { ProtectedRoute } from './components/ProtectedRoute'
@@ -23,6 +24,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/peso" element={<PesoChart />} />
           <Route path="/vacinas" element={<Vacinas />} />
+          <Route path="/consultas" element={<Consultas />} />
           <Route path="/historico" element={<HistoricoPeriodo />} />
         </Route>
         <Route path="*" element={<Navigate to="/dashboard" replace />} />

@@ -11,6 +11,7 @@ import { Refeicoes } from './pages/Refeicoes'
 import { Petiscos } from './pages/Petiscos'
 import { ComandosTreino } from './pages/ComandosTreino'
 import { SessoesTreino } from './pages/SessoesTreino'
+import { EvolucaoComando } from './pages/EvolucaoComando'
 import { Dashboard } from './pages/Dashboard'
 import { HistoricoPeriodo } from './pages/HistoricoPeriodo'
 import { ProtectedRoute } from './components/ProtectedRoute'
@@ -41,6 +42,7 @@ function App() {
           <Route path="/petiscos" element={<Petiscos />} />
           <Route path="/comandos-treino" element={<ComandosTreino />} />
           <Route path="/sessoes-treino" element={<SessoesTreino />} />
+          <Route path="/comandos-treino/:id/evolucao" element={<EvolucaoComando />} />
           <Route path="/historico" element={<HistoricoPeriodo />} />
         </Route>
         <Route path="*" element={<Navigate to="/dashboard" replace />} />

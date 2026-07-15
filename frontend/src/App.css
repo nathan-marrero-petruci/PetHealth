@@ -112,6 +112,16 @@
   }
 }
 
+.evolucao-primeira-conquista {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: #fef3c7;
+  color: #b45309;
+  font-weight: 600;
+  font-size: 13px;
+}
+
 .streak-badge {
   display: inline-block;
   padding: 8px 12px;

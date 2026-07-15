@@ -136,7 +136,12 @@ export function ComandosTreino() {
                   {comando.descricao ? ` — ${comando.descricao}` : ""}
                 </div>
                 <div className="vacinas-item-acoes">
-                  <Link to={`/comandos-treino/${comando.id}/evolucao`}>Ver evolução</Link>
+                  <Link
+                    to={`/comandos-treino/${comando.id}/evolucao`}
+                    state={{ nome: comando.nome }}
+                  >
+                    Ver evolução
+                  </Link>
                   <button type="button" onClick={() => handleEditar(comando)}>
                     Editar
                   </button>

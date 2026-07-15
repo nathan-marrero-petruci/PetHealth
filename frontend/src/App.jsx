@@ -9,6 +9,7 @@ import { Observacoes } from './pages/Observacoes'
 import { DietaPadrao } from './pages/DietaPadrao'
 import { Refeicoes } from './pages/Refeicoes'
 import { Petiscos } from './pages/Petiscos'
+import { ComandosTreino } from './pages/ComandosTreino'
 import { Dashboard } from './pages/Dashboard'
 import { HistoricoPeriodo } from './pages/HistoricoPeriodo'
 import { ProtectedRoute } from './components/ProtectedRoute'
@@ -37,6 +38,7 @@ function App() {
           <Route path="/dieta" element={<DietaPadrao />} />
           <Route path="/refeicoes" element={<Refeicoes />} />
           <Route path="/petiscos" element={<Petiscos />} />
+          <Route path="/comandos-treino" element={<ComandosTreino />} />
           <Route path="/historico" element={<HistoricoPeriodo />} />
         </Route>
         <Route path="*" element={<Navigate to="/dashboard" replace />} />

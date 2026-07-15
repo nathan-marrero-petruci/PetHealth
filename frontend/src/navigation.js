@@ -14,6 +14,7 @@ export const NAVEGACAO = [
   { modulo: "Alimentação", label: "Dieta padrão", rota: "/dieta" },
   { modulo: "Alimentação", label: "Refeições", rota: "/refeicoes" },
   { modulo: "Alimentação", label: "Petiscos", rota: "/petiscos" },
+  { modulo: "Treinamento", label: "Comandos de treino", rota: "/comandos-treino" },
   { modulo: "Relatórios", label: "Dashboard", rota: "/dashboard" },
   { modulo: "Relatórios", label: "Histórico por período", rota: "/historico" },
 ];

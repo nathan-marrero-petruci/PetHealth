@@ -112,6 +112,16 @@
   }
 }
 
+.streak-badge {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: #fef3c7;
+  color: #b45309;
+  font-weight: 600;
+  width: fit-content;
+}
+
 .saude-preventiva-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -8,5 +8,5 @@ public class Vacina
     public string Nome { get; set; } = string.Empty;
     public DateOnly DataAplicacao { get; set; }
     public DateOnly? DataProximaDose { get; set; }
-    public int AntecedenciaLembreteDias { get; set; }
+    public int? AntecedenciaLembreteDias { get; set; }
 }

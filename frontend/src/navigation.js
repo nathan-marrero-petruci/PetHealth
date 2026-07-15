@@ -6,6 +6,7 @@
 // AppLayout agrupa e renderiza os itens automaticamente por módulo.
 export const NAVEGACAO = [
   { modulo: "Saúde", label: "Peso", rota: "/peso" },
+  { modulo: "Saúde", label: "Vacinas", rota: "/vacinas" },
   { modulo: "Relatórios", label: "Dashboard", rota: "/dashboard" },
   { modulo: "Relatórios", label: "Histórico por período", rota: "/historico" },
 ];

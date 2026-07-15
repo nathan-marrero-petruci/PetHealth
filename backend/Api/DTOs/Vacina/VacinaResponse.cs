@@ -5,5 +5,5 @@ public record VacinaResponse(
     string Nome,
     DateOnly DataAplicacao,
     DateOnly? DataProximaDose,
-    int AntecedenciaLembreteDias,
+    int? AntecedenciaLembreteDias,
     VacinaStatus Status);

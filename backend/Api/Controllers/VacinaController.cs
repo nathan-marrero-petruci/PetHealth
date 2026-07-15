@@ -53,6 +53,11 @@ public class VacinaController(AppDbContext db) : ControllerBase
             return BadRequest(new { message = "Data da próxima dose não pode ser anterior à data de aplicação." });
         }
 
+        if (request.DataProximaDose is not null && request.AntecedenciaLembreteDias is null)
+        {
+            return BadRequest(new { message = "Antecedência do lembrete é obrigatória quando há próxima dose." });
+        }
+
         var petId = await GetPetIdAsync();
 
         if (petId is null)
@@ -67,7 +72,7 @@ public class VacinaController(AppDbContext db) : ControllerBase
             Nome = request.Nome,
             DataAplicacao = request.DataAplicacao!.Value,
             DataProximaDose = request.DataProximaDose,
-            AntecedenciaLembreteDias = request.AntecedenciaLembreteDias!.Value
+            AntecedenciaLembreteDias = request.DataProximaDose is null ? null : request.AntecedenciaLembreteDias
         };
 
         db.Vacinas.Add(vacina);
@@ -82,6 +87,11 @@ public class VacinaController(AppDbContext db) : ControllerBase
         if (request.DataProximaDose is not null && request.DataProximaDose < request.DataAplicacao)
         {
             return BadRequest(new { message = "Data da próxima dose não pode ser anterior à data de aplicação." });
+        }
+
+        if (request.DataProximaDose is not null && request.AntecedenciaLembreteDias is null)
+        {
+            return BadRequest(new { message = "Antecedência do lembrete é obrigatória quando há próxima dose." });
         }
 
         var petId = await GetPetIdAsync();
@@ -101,7 +111,7 @@ public class VacinaController(AppDbContext db) : ControllerBase
         vacina.Nome = request.Nome;
         vacina.DataAplicacao = request.DataAplicacao!.Value;
         vacina.DataProximaDose = request.DataProximaDose;
-        vacina.AntecedenciaLembreteDias = request.AntecedenciaLembreteDias!.Value;
+        vacina.AntecedenciaLembreteDias = request.DataProximaDose is null ? null : request.AntecedenciaLembreteDias;
 
         await db.SaveChangesAsync();
 
@@ -167,7 +177,7 @@ public class VacinaController(AppDbContext db) : ControllerBase
             return VacinaStatus.Vencida;
         }
 
-        var inicioJanelaLembrete = dataProximaDose.AddDays(-vacina.AntecedenciaLembreteDias);
+        var inicioJanelaLembrete = dataProximaDose.AddDays(-vacina.AntecedenciaLembreteDias!.Value);
 
         return hoje >= inicioJanelaLembrete ? VacinaStatus.Proxima : VacinaStatus.EmDia;
     }

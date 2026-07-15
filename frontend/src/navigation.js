@@ -10,6 +10,7 @@ export const NAVEGACAO = [
   { modulo: "Saúde", label: "Consultas", rota: "/consultas" },
   { modulo: "Saúde", label: "Medicações", rota: "/medicacoes" },
   { modulo: "Saúde", label: "Saúde preventiva", rota: "/saude-preventiva" },
+  { modulo: "Saúde", label: "Observações", rota: "/observacoes" },
   { modulo: "Relatórios", label: "Dashboard", rota: "/dashboard" },
   { modulo: "Relatórios", label: "Histórico por período", rota: "/historico" },
 ];

@@ -127,7 +127,7 @@ export function Refeicoes() {
       <section className="dashboard-card">
         <h2>Refeições registradas</h2>
         {refeicoes.length === 0 ? (
-          <p>Nenhuma refeição registrada ainda.</p>
+          <p className="text-meta">Nenhuma refeição registrada ainda.</p>
         ) : (
           <ul className="vacinas-list">
             {refeicoes.map((refeicao) => (

@@ -45,11 +45,11 @@
 }
 
 .login-error {
-  color: #dc2626;
+  color: var(--danger);
 }
 
 .form-success {
-  color: #16a34a;
+  color: var(--success);
 }
 
 .peso-chart-page {
@@ -70,9 +70,11 @@
 }
 
 .dashboard-card {
-  border: 1px solid #d1d5db;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 16px;
+  box-shadow: var(--shadow);
 }
 
 .dashboard-pet-identidade {
@@ -103,11 +105,11 @@
 }
 
 .dashboard-banner-vencida {
-  background-color: #dc2626;
+  background-color: var(--danger);
 }
 
 .dashboard-banner-proxima {
-  background-color: #f59e0b;
+  background-color: var(--warning);
 }
 
 .vacinas-list {
@@ -119,14 +121,16 @@
 }
 
 .vacinas-item {
+  background: var(--bg-surface);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
   padding: 12px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--border);
   border-radius: 8px;
+  box-shadow: var(--shadow);
 }
 
 .vacinas-item-acoes {
@@ -136,14 +140,14 @@
 }
 
 .vacinas-item-proxima {
-  background-color: #f59e0b;
-  border-color: #f59e0b;
+  background-color: var(--warning);
+  border-color: var(--warning);
   color: #fff;
 }
 
 .vacinas-item-vencida {
-  background-color: #dc2626;
-  border-color: #dc2626;
+  background-color: var(--danger);
+  border-color: var(--danger);
   color: #fff;
 }
 
@@ -161,8 +165,8 @@
   display: inline-block;
   padding: 4px 8px;
   border-radius: 4px;
-  background-color: #d1fae5;
-  color: #065f46;
+  background-color: var(--success-bg);
+  color: var(--success);
   font-weight: 600;
   font-size: 13px;
 }
@@ -171,8 +175,8 @@
   display: inline-block;
   padding: 8px 12px;
   border-radius: 4px;
-  background-color: #d1fae5;
-  color: #065f46;
+  background-color: var(--success-bg);
+  color: var(--success);
   font-weight: 600;
   width: fit-content;
 }

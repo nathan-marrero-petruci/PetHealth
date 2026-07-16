@@ -125,7 +125,7 @@ export function SecaoProdutoAplicacao({
         ) : itens === null ? (
           <p>Carregando...</p>
         ) : itens.length === 0 ? (
-          <p>{mensagemVazio}</p>
+          <p className="text-meta">{mensagemVazio}</p>
         ) : (
           <ul className="vacinas-list">
             {itens.map((item) => (

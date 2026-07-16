@@ -61,7 +61,7 @@ export function PesoChart() {
   }
 
   if (pesos.length === 0 && !pet) {
-    return <p>Nenhum registro de peso cadastrado ainda.</p>;
+    return <p className="text-meta">Nenhum registro de peso cadastrado ainda.</p>;
   }
 
   const registrosOrdenados = [...pesos].reverse();

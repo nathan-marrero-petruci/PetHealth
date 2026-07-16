@@ -117,7 +117,7 @@ export function Dashboard() {
             {pet ? ` — peso de referência: ${pet.pesoReferencia} kg` : ""}
           </p>
         ) : (
-          <p>Nenhum registro de peso cadastrado ainda.</p>
+          <p className="text-meta">Nenhum registro de peso cadastrado ainda.</p>
         )}
         <Link to="/peso">Ver evolução de peso</Link>
       </section>
@@ -127,7 +127,7 @@ export function Dashboard() {
         {vacinasError ? (
           <p>Não foi possível carregar os dados de vacinas.</p>
         ) : vacinasAlerta.length === 0 ? (
-          <p>Nenhuma vacina próxima ou vencida no momento.</p>
+          <p className="text-meta">Nenhuma vacina próxima ou vencida no momento.</p>
         ) : (
           <ul className="dashboard-vacinas-list">
             {vacinasAlerta.map((vacina) => (
@@ -163,7 +163,7 @@ export function Dashboard() {
             </ul>
           </div>
         ) : (
-          <p>Nenhuma sessão de treino registrada ainda.</p>
+          <p className="text-meta">Nenhuma sessão de treino registrada ainda.</p>
         )}
       </section>
     </div>

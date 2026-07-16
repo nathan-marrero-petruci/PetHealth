@@ -191,7 +191,7 @@ export function Medicacoes() {
       <section className="dashboard-card">
         <h2>Em uso</h2>
         {emUso.length === 0 ? (
-          <p>Nenhuma medicação em uso.</p>
+          <p className="text-meta">Nenhuma medicação em uso.</p>
         ) : (
           <ul className="vacinas-list">
             {emUso.map((medicacao) => (
@@ -218,7 +218,7 @@ export function Medicacoes() {
       <section className="dashboard-card">
         <h2>Encerradas</h2>
         {encerradas.length === 0 ? (
-          <p>Nenhuma medicação encerrada.</p>
+          <p className="text-meta">Nenhuma medicação encerrada.</p>
         ) : (
           <ul className="vacinas-list">
             {encerradas.map((medicacao) => (

@@ -63,7 +63,7 @@ export function EvolucaoComando() {
 
       <section className="dashboard-card">
         {evolucao.length === 0 ? (
-          <p>Nenhuma sessão registrada ainda para este comando.</p>
+          <p className="text-meta">Nenhuma sessão registrada ainda para este comando.</p>
         ) : (
           <ul className="vacinas-list">
             {evolucao.map((item, index) => (

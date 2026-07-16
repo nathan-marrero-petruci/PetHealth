@@ -40,7 +40,7 @@ function Secao({ titulo, error, itens, renderItem }) {
       {error ? (
         <p>Não foi possível carregar os dados de {titulo.toLowerCase()}.</p>
       ) : itens.length === 0 ? (
-        <p>Nenhum registro no período selecionado.</p>
+        <p className="text-meta">Nenhum registro no período selecionado.</p>
       ) : (
         <ul>
           {itens.map((item) => (

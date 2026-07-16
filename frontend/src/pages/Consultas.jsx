@@ -144,7 +144,7 @@ export function Consultas() {
       <section className="dashboard-card">
         <h2>Consultas registradas</h2>
         {consultas.length === 0 ? (
-          <p>Nenhuma consulta registrada ainda.</p>
+          <p className="text-meta">Nenhuma consulta registrada ainda.</p>
         ) : (
           <ul className="vacinas-list">
             {consultas.map((consulta) => (

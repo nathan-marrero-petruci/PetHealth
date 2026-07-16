@@ -126,7 +126,7 @@ export function ComandosTreino() {
       <section className="dashboard-card">
         <h2>Comandos cadastrados</h2>
         {comandosAtivos.length === 0 ? (
-          <p>Nenhum comando de treino cadastrado ainda.</p>
+          <p className="text-meta">Nenhum comando de treino cadastrado ainda.</p>
         ) : (
           <ul className="vacinas-list">
             {comandosAtivos.map((comando) => (

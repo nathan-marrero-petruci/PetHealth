@@ -167,7 +167,7 @@ export function Vacinas() {
       <section className="dashboard-card">
         <h2>Vacinas cadastradas</h2>
         {vacinas.length === 0 ? (
-          <p>Nenhuma vacina cadastrada ainda.</p>
+          <p className="text-meta">Nenhuma vacina cadastrada ainda.</p>
         ) : (
           <ul className="vacinas-list">
             {vacinas.map((vacina) => (

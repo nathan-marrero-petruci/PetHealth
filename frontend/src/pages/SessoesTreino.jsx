@@ -185,7 +185,7 @@ export function SessoesTreino() {
       <section className="dashboard-card">
         <h2>{editingId ? "Editar sessão" : "Registrar sessão"}</h2>
         {comandosAtivos.length === 0 ? (
-          <p>
+          <p className="text-meta">
             Nenhum comando de treino cadastrado ainda. <Link to="/comandos-treino">Cadastre um comando</Link>{" "}
             antes de registrar uma sessão.
           </p>
@@ -247,7 +247,7 @@ export function SessoesTreino() {
       <section className="dashboard-card">
         <h2>Histórico de sessões</h2>
         {sessoes.length === 0 ? (
-          <p>Nenhuma sessão de treino registrada ainda.</p>
+          <p className="text-meta">Nenhuma sessão de treino registrada ainda.</p>
         ) : (
           <ul className="vacinas-list">
             {sessoes.map((sessao) => (

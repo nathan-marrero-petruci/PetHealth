@@ -135,7 +135,7 @@ export function Petiscos() {
       <section className="dashboard-card">
         <h2>Petiscos registrados</h2>
         {itens.length === 0 ? (
-          <p>Nenhum petisco registrado ainda.</p>
+          <p className="text-meta">Nenhum petisco registrado ainda.</p>
         ) : (
           <ul className="vacinas-list">
             {itens.map((item) => (

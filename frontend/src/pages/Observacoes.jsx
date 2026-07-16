@@ -122,7 +122,7 @@ export function Observacoes() {
       <section className="dashboard-card">
         <h2>Observações registradas</h2>
         {observacoes.length === 0 ? (
-          <p>Nenhuma observação registrada ainda.</p>
+          <p className="text-meta">Nenhuma observação registrada ainda.</p>
         ) : (
           <ul className="vacinas-list">
             {observacoes.map((observacao) => (

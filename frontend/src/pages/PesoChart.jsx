@@ -57,7 +57,7 @@ export function PesoChart() {
   }
 
   if (pesos === null) {
-    return <p>Carregando...</p>;
+    return <p className="text-meta">Carregando...</p>;
   }
 
   if (pesos.length === 0 && !pet) {
@@ -67,6 +67,7 @@ export function PesoChart() {
   const registrosOrdenados = [...pesos].reverse();
   const labels = registrosOrdenados.map((registro) => registro.data);
   const pesoData = registrosOrdenados.map((registro) => registro.peso);
+  const corReferencia = getComputedStyle(document.documentElement).getPropertyValue("--warning").trim();
 
   // Chart.js só desenha um segmento de linha entre 2 posições no eixo X.
   // Com menos de 2 registros, a linha de referência não teria como ser
@@ -91,7 +92,7 @@ export function PesoChart() {
             {
               label: "Peso de referência (kg)",
               data: labelsGrafico.map(() => pet.pesoReferencia),
-              borderColor: "#f59e0b",
+              borderColor: corReferencia,
               borderDash: [6, 6],
               pointRadius: 0,
             },

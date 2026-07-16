@@ -88,7 +88,7 @@ export function Consultas() {
   }
 
   if (consultas === null) {
-    return <p>Carregando...</p>;
+    return <p className="text-meta">Carregando...</p>;
   }
 
   return (

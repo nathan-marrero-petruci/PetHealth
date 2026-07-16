@@ -123,7 +123,7 @@ export function SecaoProdutoAplicacao({
         {error ? (
           <p>{error}</p>
         ) : itens === null ? (
-          <p>Carregando...</p>
+          <p className="text-meta">Carregando...</p>
         ) : itens.length === 0 ? (
           <p className="text-meta">{mensagemVazio}</p>
         ) : (

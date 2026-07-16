@@ -86,7 +86,7 @@ export function Petiscos() {
   }
 
   if (itens === null) {
-    return <p>Carregando...</p>;
+    return <p className="text-meta">Carregando...</p>;
   }
 
   return (

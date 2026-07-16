@@ -72,7 +72,7 @@ export function DietaPadrao() {
   }
 
   if (carregando) {
-    return <p>Carregando...</p>;
+    return <p className="text-meta">Carregando...</p>;
   }
 
   return (

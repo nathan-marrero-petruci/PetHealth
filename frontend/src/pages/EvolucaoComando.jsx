@@ -47,7 +47,7 @@ export function EvolucaoComando() {
   }
 
   if (evolucao === null) {
-    return <p>Carregando...</p>;
+    return <p className="text-meta">Carregando...</p>;
   }
 
   const primeiraConquistaIndex = evolucao.findIndex(

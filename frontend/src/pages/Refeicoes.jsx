@@ -83,7 +83,7 @@ export function Refeicoes() {
   }
 
   if (refeicoes === null) {
-    return <p>Carregando...</p>;
+    return <p className="text-meta">Carregando...</p>;
   }
 
   return (

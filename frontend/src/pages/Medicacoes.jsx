@@ -97,7 +97,7 @@ export function Medicacoes() {
   }
 
   if (medicacoes === null) {
-    return <p>Carregando...</p>;
+    return <p className="text-meta">Carregando...</p>;
   }
 
   const emUso = medicacoes.filter((medicacao) => medicacao.status === "EmUso");

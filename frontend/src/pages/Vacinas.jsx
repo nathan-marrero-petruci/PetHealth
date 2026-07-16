@@ -107,7 +107,7 @@ export function Vacinas() {
   }
 
   if (vacinas === null) {
-    return <p>Carregando...</p>;
+    return <p className="text-meta">Carregando...</p>;
   }
 
   return (

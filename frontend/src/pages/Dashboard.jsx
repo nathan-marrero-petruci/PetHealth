@@ -86,7 +86,7 @@ export function Dashboard() {
   const sessoesCarregando = sessoes === null && !sessoesError;
 
   if (pesosCarregando || vacinasCarregando || sessoesCarregando) {
-    return <p>Carregando...</p>;
+    return <p className="text-meta">Carregando...</p>;
   }
 
   const pesoAtual = pesos && pesos.length > 0 ? pesos[0] : null;

@@ -124,7 +124,7 @@ export function HistoricoPeriodo() {
       </form>
 
       {validationError && <p className="login-error">{validationError}</p>}
-      {loading && <p>Carregando...</p>}
+      {loading && <p className="text-meta">Carregando...</p>}
 
       {resultados && !loading && (
         <>

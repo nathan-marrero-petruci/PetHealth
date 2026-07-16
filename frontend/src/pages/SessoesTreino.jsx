@@ -169,7 +169,7 @@ export function SessoesTreino() {
   }
 
   if (sessoes === null || comandosAtivos === null) {
-    return <p>Carregando...</p>;
+    return <p className="text-meta">Carregando...</p>;
   }
 
   const streak = calcularStreak(sessoes);

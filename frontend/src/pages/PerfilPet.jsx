@@ -91,7 +91,7 @@ export function PerfilPet() {
   }
 
   if (carregando) {
-    return <p>Carregando...</p>;
+    return <p className="text-meta">Carregando...</p>;
   }
 
   return (

@@ -82,7 +82,7 @@ export function Observacoes() {
   }
 
   if (observacoes === null) {
-    return <p>Carregando...</p>;
+    return <p className="text-meta">Carregando...</p>;
   }
 
   return (

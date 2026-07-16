@@ -85,7 +85,7 @@ export function ComandosTreino() {
   }
 
   if (comandos === null) {
-    return <p>Carregando...</p>;
+    return <p className="text-meta">Carregando...</p>;
   }
 
   const comandosAtivos = comandos.filter((comando) => comando.ativo);

@@ -20,13 +20,30 @@ export function PesoChart() {
 
   useEffect(() => {
     async function load() {
+      let petAtual = null;
+
       try {
-        const [pesosResponse, petResponse] = await Promise.all([
-          api.get("/api/pesos"),
-          api.get("/api/pet"),
-        ]);
+        const petResponse = await api.get("/api/pet");
+        petAtual = petResponse.data;
+      } catch (petError) {
+        if (petError.response?.status !== 404) {
+          setError("Não foi possível carregar os dados de peso.");
+          return;
+        }
+      }
+
+      setPet(petAtual);
+
+      // Sem pet cadastrado, /api/pesos responde 400 ("cadastre o pet antes
+      // de..."), então nem faz sentido chamá-lo.
+      if (!petAtual) {
+        setPesos([]);
+        return;
+      }
+
+      try {
+        const pesosResponse = await api.get("/api/pesos");
         setPesos(pesosResponse.data);
-        setPet(petResponse.data);
       } catch {
         setError("Não foi possível carregar os dados de peso.");
       }
@@ -43,7 +60,7 @@ export function PesoChart() {
     return <p>Carregando...</p>;
   }
 
-  if (pesos.length === 0) {
+  if (pesos.length === 0 && !pet) {
     return <p>Nenhum registro de peso cadastrado ainda.</p>;
   }
 
@@ -52,12 +69,13 @@ export function PesoChart() {
   const pesoData = registrosOrdenados.map((registro) => registro.peso);
 
   // Chart.js só desenha um segmento de linha entre 2 posições no eixo X.
-  // Com um único registro, a linha de referência não teria como ser traçada,
-  // então adicionamos uma posição extra (sem rótulo, sem dado de peso) só
-  // para dar à linha de referência onde se estender.
-  const precisaPontoExtra = labels.length === 1;
-  const labelsGrafico = precisaPontoExtra ? [...labels, ""] : labels;
-  const pesoDataGrafico = precisaPontoExtra ? [...pesoData, null] : pesoData;
+  // Com menos de 2 registros, a linha de referência não teria como ser
+  // traçada, então completamos com posições extras (sem rótulo, sem dado de
+  // peso) só para dar à linha de referência onde se estender.
+  const pontosExtras = Math.max(0, 2 - labels.length);
+  const labelsGrafico = pontosExtras > 0 ? [...labels, ...Array(pontosExtras).fill("")] : labels;
+  const pesoDataGrafico =
+    pontosExtras > 0 ? [...pesoData, ...Array(pontosExtras).fill(null)] : pesoData;
 
   const data = {
     labels: labelsGrafico,

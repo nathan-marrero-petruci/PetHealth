@@ -62,9 +62,20 @@ export function AppLayout() {
           </div>
         ))}
 
-        <button type="button" className="app-nav-logout" onClick={handleLogout}>
-          Sair
-        </button>
+        <div className="app-nav-perfil">
+          <NavLink
+            to="/perfil-pet"
+            className={({ isActive }) =>
+              isActive ? "app-nav-link app-nav-link-ativo" : "app-nav-link"
+            }
+            onClick={() => setMenuAberto(false)}
+          >
+            Perfil da Akira
+          </NavLink>
+          <button type="button" className="app-nav-logout" onClick={handleLogout}>
+            Sair
+          </button>
+        </div>
       </nav>
 
       <main className="app-content">

@@ -75,6 +75,19 @@
   padding: 16px;
 }
 
+.dashboard-pet-identidade {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dashboard-pet-foto {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 .dashboard-vacinas-list {
   list-style: none;
   padding: 0;
@@ -231,7 +244,10 @@
   font-weight: 600;
 }
 
-.app-nav-logout {
+.app-nav-perfil {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   margin-left: auto;
 }
 
@@ -269,7 +285,10 @@
     gap: 8px;
   }
 
-  .app-nav-logout {
+  .app-nav-perfil {
     margin-left: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
 }

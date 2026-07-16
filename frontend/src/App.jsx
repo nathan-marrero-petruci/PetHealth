@@ -14,6 +14,7 @@ import { SessoesTreino } from './pages/SessoesTreino'
 import { EvolucaoComando } from './pages/EvolucaoComando'
 import { Dashboard } from './pages/Dashboard'
 import { HistoricoPeriodo } from './pages/HistoricoPeriodo'
+import { PerfilPet } from './pages/PerfilPet'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { AppLayout } from './components/AppLayout'
 import './App.css'
@@ -44,6 +45,7 @@ function App() {
           <Route path="/sessoes-treino" element={<SessoesTreino />} />
           <Route path="/comandos-treino/:id/evolucao" element={<EvolucaoComando />} />
           <Route path="/historico" element={<HistoricoPeriodo />} />
+          <Route path="/perfil-pet" element={<PerfilPet />} />
         </Route>
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>

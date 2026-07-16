@@ -99,6 +99,14 @@ export function Dashboard() {
     <div className="dashboard-page">
       <h1>Dashboard</h1>
 
+      {pet && (
+        <section className="dashboard-card dashboard-pet-identidade">
+          {pet.fotoUrl && <img src={pet.fotoUrl} alt={pet.nome} className="dashboard-pet-foto" />}
+          <h2>{pet.nome}</h2>
+          <Link to="/perfil-pet">Editar perfil</Link>
+        </section>
+      )}
+
       <section className="dashboard-card">
         <h2>Peso</h2>
         {pesosError ? (

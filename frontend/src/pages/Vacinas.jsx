@@ -116,7 +116,7 @@ export function Vacinas() {
 
       <section className="dashboard-card">
         <h2>{editingId ? "Editar vacina" : "Cadastrar vacina"}</h2>
-        <form onSubmit={handleSubmit} className="login-form">
+        <form onSubmit={handleSubmit} className="form">
           <label>
             Nome/tipo da vacina
             <input

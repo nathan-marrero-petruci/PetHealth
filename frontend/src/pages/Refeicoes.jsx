@@ -92,7 +92,7 @@ export function Refeicoes() {
 
       <section className="dashboard-card">
         <h2>{editingId ? "Editar refeição" : "Registrar refeição"}</h2>
-        <form onSubmit={handleSubmit} className="login-form">
+        <form onSubmit={handleSubmit} className="form">
           <label>
             Data/hora
             <input

@@ -190,7 +190,7 @@ export function SessoesTreino() {
             antes de registrar uma sessão.
           </p>
         ) : (
-          <form onSubmit={handleSubmit} className="login-form">
+          <form onSubmit={handleSubmit} className="form">
             <label>
               Data da sessão
               <input

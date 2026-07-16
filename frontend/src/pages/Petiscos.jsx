@@ -95,7 +95,7 @@ export function Petiscos() {
 
       <section className="dashboard-card">
         <h2>{editingId ? "Editar petisco" : "Registrar petisco"}</h2>
-        <form onSubmit={handleSubmit} className="login-form">
+        <form onSubmit={handleSubmit} className="form">
           <label>
             Data/hora
             <input

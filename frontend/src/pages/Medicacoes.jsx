@@ -109,7 +109,7 @@ export function Medicacoes() {
 
       <section className="dashboard-card">
         <h2>{editingId ? "Editar medicação" : "Cadastrar medicação"}</h2>
-        <form onSubmit={handleSubmit} className="login-form">
+        <form onSubmit={handleSubmit} className="form">
           <label>
             Nome
             <input

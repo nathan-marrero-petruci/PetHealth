@@ -58,7 +58,7 @@ body {
   width: 1126px;
   max-width: 100%;
   margin: 0 auto;
-  text-align: center;
+  text-align: left;
   border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
@@ -101,6 +101,18 @@ code,
   display: inline-flex;
   border-radius: 4px;
   color: var(--text-h);
+}
+
+button {
+  font-family: var(--sans);
+  font-size: 16px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid var(--accent-border);
+  border-radius: 6px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  cursor: pointer;
 }
 
 code {

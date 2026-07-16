@@ -97,7 +97,7 @@ export function Consultas() {
 
       <section className="dashboard-card">
         <h2>{editingId ? "Editar consulta" : "Cadastrar consulta"}</h2>
-        <form onSubmit={handleSubmit} className="login-form">
+        <form onSubmit={handleSubmit} className="form">
           <label>
             Data
             <input

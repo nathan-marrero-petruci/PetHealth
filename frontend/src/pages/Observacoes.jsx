@@ -91,7 +91,7 @@ export function Observacoes() {
 
       <section className="dashboard-card">
         <h2>{editingId ? "Editar observação" : "Cadastrar observação"}</h2>
-        <form onSubmit={handleSubmit} className="login-form">
+        <form onSubmit={handleSubmit} className="form">
           <label>
             Data
             <input

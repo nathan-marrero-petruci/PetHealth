@@ -81,7 +81,7 @@ export function SecaoProdutoAplicacao({
     <div>
       <section className="dashboard-card">
         <h2>{editingId ? `Editar ${titulo.toLowerCase()}` : `Cadastrar ${titulo.toLowerCase()}`}</h2>
-        <form onSubmit={handleSubmit} className="login-form">
+        <form onSubmit={handleSubmit} className="form">
           <label>
             Produto
             <input

@@ -96,7 +96,7 @@ export function ComandosTreino() {
 
       <section className="dashboard-card">
         <h2>{editingId ? "Editar comando" : "Cadastrar comando"}</h2>
-        <form onSubmit={handleSubmit} className="login-form">
+        <form onSubmit={handleSubmit} className="form">
           <label>
             Nome
             <input

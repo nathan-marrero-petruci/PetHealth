@@ -103,7 +103,7 @@ export function HistoricoPeriodo() {
     <div className="dashboard-page">
       <h1>Histórico por período</h1>
 
-      <form onSubmit={handleSubmit} className="login-form">
+      <form onSubmit={handleSubmit} className="form">
         <label>
           Data inicial
           <input

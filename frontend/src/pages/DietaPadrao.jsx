@@ -80,7 +80,7 @@ export function DietaPadrao() {
       <h1>Dieta padrão</h1>
 
       <section className="dashboard-card">
-        <form onSubmit={handleSubmit} className="login-form">
+        <form onSubmit={handleSubmit} className="form">
           <label>
             Nome/marca da ração
             <input
